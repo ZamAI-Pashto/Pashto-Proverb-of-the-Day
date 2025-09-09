@@ -5,14 +5,17 @@ A simple, elegant web application that displays a random Pashto proverb (`متل
 ## Today's Proverb (auto-updated)
 
 <!-- PROVERB-OF-THE-DAY:START -->
-> دلته متل به په اوتومات ډول تازه شي.
+> غره ته مه ګوره، ځان ته ګوره.
 
-"The proverb will auto-update here."
+"Don't look at the mountain, look at yourself."
 
-Meaning: The contextual meaning will appear here.
+Meaning: Focus on your own capabilities and limitations rather than the size of the challenge ahead.
 
-— Updated: 1970-01-01 (UTC)
+— Updated: 2025-09-09 (UTC)
 <!-- PROVERB-OF-THE-DAY:END -->
+
+
+
 
 ## Features
 

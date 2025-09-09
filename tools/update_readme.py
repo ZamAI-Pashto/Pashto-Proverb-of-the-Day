@@ -34,7 +34,12 @@ def load_proverbs(json_path: pathlib.Path) -> List[Dict[str, str]]:
 
 def ordinal_day_utc(date: dt.date | None = None) -> int:
     if date is None:
-        date = dt.datetime.utcnow().date()
+        try:
+            # For Python 3.11+ using UTC directly
+            date = dt.datetime.now(dt.UTC).date()
+        except AttributeError:
+            # For older Python versions using timezone.utc
+            date = dt.datetime.now(dt.timezone.utc).date()
     return (date - dt.date(date.year, 1, 1)).days
 
 
@@ -85,7 +90,12 @@ def main(argv: List[str]) -> int:
             print("Invalid --date format, expected YYYY-MM-DD", file=sys.stderr)
             return 2
     else:
-        now = dt.datetime.utcnow()
+        try:
+            # For Python 3.11+ using UTC directly
+            now = dt.datetime.now(dt.UTC)
+        except AttributeError:
+            # For older Python versions using timezone.utc
+            now = dt.datetime.now(dt.timezone.utc)
 
     proverbs = load_proverbs(json_path)
     if not proverbs:
