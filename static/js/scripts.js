@@ -14,12 +14,32 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(data => {
       proverbs = data;
-      displayRandomProverb();
+      // Show a deterministic proverb for the current day
+      displayDailyProverb();
     })
     .catch(error => {
       console.error('Error fetching proverbs:', error);
       proverbTextEl.textContent = 'متلونه په پورته کولو کې پاتې راغلل.';
     });
+
+  // Compute day-of-year in UTC for consistency across time zones
+  function getUTCOrdinalDay(date = new Date()) {
+    const start = Date.UTC(date.getUTCFullYear(), 0, 1);
+    const today = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+    const diff = today - start;
+    return Math.floor(diff / (24 * 60 * 60 * 1000)); // 0-based day of year
+  }
+
+  // Display the proverb of the day deterministically based on day-of-year
+  function displayDailyProverb() {
+    if (proverbs.length === 0) return;
+    const idx = getUTCOrdinalDay() % proverbs.length;
+    currentProverb = proverbs[idx];
+
+    proverbTextEl.textContent = currentProverb.proverb;
+    translationEl.textContent = `"${currentProverb.translation}"`;
+    meaningEl.textContent = currentProverb.meaning;
+  }
 
   // Display a random proverb
   function displayRandomProverb() {
@@ -62,5 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Event Listeners
   newProverbBtn.addEventListener('click', displayRandomProverb);
   copyBtn.addEventListener('click', copyProverb);
-  shareBtn.addEventListener('click', shareProverb);
+  if (shareBtn) {
+    shareBtn.addEventListener('click', shareProverb);
+  }
 });

@@ -1,0 +1,36 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Validate JSON
+        run: |
+          python - <<'PY'
+          import json, sys
+          import pathlib
+          p = pathlib.Path('proverbs.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          assert isinstance(data, list) and data, 'proverbs.json must be a non-empty list'
+          for i, item in enumerate(data):
+            for k in ('proverb','translation','meaning'):
+              assert k in item and isinstance(item[k], str) and item[k].strip(), f'missing {k} in item {i}'
+          print('proverbs.json is valid with', len(data), 'entries')
+          PY
+
+      - name: Update script dry-run
+        run: |
+          python tools/update_readme.py --dry-run > /dev/null

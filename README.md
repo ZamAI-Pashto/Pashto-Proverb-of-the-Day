@@ -2,6 +2,18 @@
 
 A simple, elegant web application that displays a random Pashto proverb (`متل`) each day, along with its English translation and contextual meaning.
 
+## Today's Proverb (auto-updated)
+
+<!-- PROVERB-OF-THE-DAY:START -->
+> دلته متل به په اوتومات ډول تازه شي.
+
+"The proverb will auto-update here."
+
+Meaning: The contextual meaning will appear here.
+
+— Updated: 1970-01-01 (UTC)
+<!-- PROVERB-OF-THE-DAY:END -->
+
 ## Features
 
 - **Daily Proverbs**: Get a new, insightful Pashto proverb every time you click the "New Proverb" button.
